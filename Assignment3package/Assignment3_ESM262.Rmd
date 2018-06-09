@@ -1,0 +1,141 @@
+---
+title: 'ESM 262: Assignment 3'
+author: "Emma Siegfried & Lauren Kaapcke"
+date: "May 22, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE)
+
+```
+
+```{r}
+library(tidyverse)
+library(roxygen2)
+library(devtools)
+library(stringr)
+library(testthat)
+
+```
+
+
+## Assignment
+
+1) Write a function that summarizes fish catches for different locations 
+    Input:
+
+    -- a table that has prices for different fish
+   
+    -- a table that has the number caught for each fish species for each location
+    
+    -- each location is in a different column
+    
+    -- each fish is in a different row 
+
+**Price Table**
+```{r tidy=TRUE}
+
+#Variables:
+fish_name <- sample(c("tuna", "salmon", "cod", "tilapia",
+                      "parrot", "sturgeon", "catfish", 
+                      "rockfish", "pollock", "flounder"))
+
+price <- round(runif(min = 2, max = 10, n = 10), digits = 2)
+
+#Table 1: 
+price_table <- as.data.frame(cbind(fish_name, price))
+price_table <- rename(price_table, Price = price)
+price_table$Price <- as.character(price_table$Price)
+price_table$Price <- as.numeric(price_table$Price)
+
+```
+
+
+**Catch Table**
+```{r}
+
+#Variables:
+locations <- LETTERS[seq(from = 1, to = 10)]
+
+fish_catch <- round(runif(min = 0, max = 20, n = 10), digits = 0)
+
+#Matrix:
+table_catch <- matrix(ncol = length(locations), nrow = length(fish_name))
+for (i in 1:length(fish_name))
+  table_catch[,i] = round(runif(min = 0, max = 20, n = 10))
+
+table_catch = as.data.frame(table_catch)
+
+rownames(table_catch) <- fish_name
+colnames(table_catch) <- locations
+
+
+#key is the column name for the new column holding pre-existing column names
+#values inside the existing columns, go into a new column of "values"
+#value is the column name for the new column holding the pre-existing columns
+
+```
+
+
+  b. Function output will be
+  
+    -- most frequently caught fish in each location
+    
+    -- total revenue for each location
+    
+    -- total fisheries revenue sum
+    
+    -- if user requests it graph of revenue by location and total revenue (as text)
+
+ 
+  c. Place your function in an *.R file
+ 
+
+```{r warning=FALSE}
+
+source("R/fish_calcs.R")
+
+fish_calcs(table_catch, price_table, plot = TRUE)
+
+
+```
+
+
+2) Write a second function that estimates fish growth rate as a function of temperature, using the following equation from Bjoornsson et al., 2007
+
+    "The relationship between specific growth rate (G) and temp in C (T) estimated by a third order polynomial (G = a + b*T + c*T^2 + d*T^3), where a,b,c,d are parameters."
+ 
+4) In an R Markdown document:
+
+    - Generate some example data for your fish market function; 
+    
+    - Show how this is created and used
+    
+
+```{r}
+
+source("R/fish_spc_growth.R")
+
+a = -0.4970
+b = 0.1656
+c = 0.08588
+d = -0.004266
+temp_range <- seq(from = 0, to = 20, by = 1)
+
+fish_spc_growth(a, b, c, d, temp_range = temp_range)
+
+
+```
+
+ 
+5) Make sure all functions and the dataset are documented
+
+6) Provide at least one test for each function 
+
+7) Export your function
+
+8) Include package and Rmarkdown in Git repository
+
+9) Submit as usual as a git link on GauchoSpace
+ 

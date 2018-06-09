@@ -1,0 +1,12 @@
+Package: Assignment3package
+Type: Package
+Title: Fish Revenue and Growth Calculations
+Version: 0.1.0
+Author: Emma Siegfried
+Maintainer: Emma Siegfried <esiegfried@ucsb.edu>
+Description: Using the functions, calculate the dominant fish caught across locations, the revenue from all fish at each location, the total revenue from all locations, and plot the revenue totals by location, and calculate the growth rate of fish
+License: None
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests: testthat
